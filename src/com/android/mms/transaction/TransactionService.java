@@ -967,6 +967,12 @@ public class TransactionService extends Service implements Observer {
 
     private void releaseNetworkRequest(int subId) {
         int phoneId = SubscriptionManagerWrapper.getPhoneId(subId);
+
+        if ((phoneId < 0) || (phoneId >= mPhoneCount)) {
+            // Return if phoneId is out of bounds
+            return;
+        }
+
         if (mMmsNetworkCallback[phoneId] != null) {
             mIsAvailable[phoneId] = false;
             Log.d(TAG, "releaseNetworkRequest phoneId=" + phoneId);
